@@ -5,8 +5,8 @@
 // =======================================================================
 
 date_default_timezone_set("Asia/Jakarta");
-include "class.DOTzX.HTMLTableGen.php"; // Find new update here: https://gist.github.com/DOTzX/3ecab71817e8461b308a1addf06eec03
-include "class.DOTzX.SimpleFileOpener.php"; // Find new update here: https://gist.github.com/DOTzX/26afe5ab070acf09e4f055db37a0ad97
+include "lib/class.DOTzX.HTMLTableGen.php"; // Find new update here: https://gist.github.com/DOTzX/3ecab71817e8461b308a1addf06eec03
+include "lib/class.DOTzX.SimpleFileOpener.php"; // Find new update here: https://gist.github.com/DOTzX/26afe5ab070acf09e4f055db37a0ad97
 include "lib/general.php";
 include "lib/game.php";
 

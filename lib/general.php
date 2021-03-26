@@ -6,6 +6,13 @@ if (!function_exists('str_starts_with')) { // PHP <8
 	}
 }
 
+if (!function_exists('str_contains')) { // PHP <8
+	function str_contains($haystack , $needle) {
+		return strpos($haystack, $needle) !== false;
+	}
+}
+
+
 function http_request($url) {
 	$ch = curl_init();
 	$agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36";

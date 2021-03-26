@@ -4,6 +4,9 @@
 // Source: https://github.com/DOTzX/PHP-Genshin-WishPityCounter
 // =======================================================================
 
+$timezone = "Asia/Jakarta";
+date_default_timezone_set($timezone);
+
 $link_wishlist = "https://hk4e-api-os.mihoyo.com/event/gacha_info/api/getConfigList";
 $link_gachalog = "https://hk4e-api-os.mihoyo.com/event/gacha_info/api/getGachaLog";
 $new_query = "";
@@ -38,7 +41,7 @@ function proceed($url) {
 		"authkey" => arr_get($query_arr, "authkey", ""),
 	]);
 
-	$sfo = new SimpleFileOpener("GI_WishData.json");
+	$sfo = new SimpleFileOpener("../GI_WishData.json");
 	$GI_WishData = json_decode($sfo->read(), true);
 	$GI_WishData = $GI_WishData ? $GI_WishData : [];
 
@@ -143,7 +146,9 @@ function proceed($url) {
 }
 
 function readLog($selected_uid=null) {
-	$sfo = new SimpleFileOpener("GI_WishData.json");
+	global $timezone;
+	
+	$sfo = new SimpleFileOpener("../GI_WishData.json");
 	$GI_WishData = json_decode($sfo->read(), true);
 	$GI_WishData = $GI_WishData ? $GI_WishData : [];
 
@@ -154,11 +159,11 @@ function readLog($selected_uid=null) {
 		if ($key !== false) unset($list_uid[$key]);
 	
 		if (count($list_uid) == 1) {
-			header("Location: " . basename(__FILE__) . "?log_id=" . $list_uid[0]);
+			header("Location: index.php?log_id=" . $list_uid[0]);
 		} else {
 			echo "Pilih UID:";
 			foreach ($list_uid as $value) {
-				echo "\n<br>[] <a href='" . basename(__FILE__) . "?log_id=" . $value . "'>" . $value . "</a>";
+				echo "\n<br>[] <a href='index.php?log_id=" . $value . "'>" . $value . "</a>";
 			}
 		}
 		die();
@@ -167,7 +172,7 @@ function readLog($selected_uid=null) {
 	if (!array_key_exists($selected_uid, $GI_WishData) || !is_numeric($selected_uid)) die("Tidak ada data tersimpan pada UID <b>$selected_uid</b>");
 
 	$utctime = date("Y-m-d H:i:s", $GI_WishData[$selected_uid]["LAST_UPDATE"]);
-	echo "Last Update: <b>" . $utctime . " WIB</b><br><br>\n\n";
+	echo "Last Update: <b>" . $utctime . " (Timezone: $timezone)</b><br><br>\n\n";
 
 	foreach ($GI_WishData[$selected_uid] as $banner_key => $wishlist) {
 		if (in_array($banner_key, ["LAST_UPDATE"])) continue;

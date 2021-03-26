@@ -4,7 +4,6 @@
 // Source: https://github.com/DOTzX/PHP-Genshin-WishPityCounter
 // =======================================================================
 
-date_default_timezone_set("Asia/Jakarta");
 include "lib/class.DOTzX.HTMLTableGen.php"; // Find new update here: https://gist.github.com/DOTzX/3ecab71817e8461b308a1addf06eec03
 include "lib/class.DOTzX.SimpleFileOpener.php"; // Find new update here: https://gist.github.com/DOTzX/26afe5ab070acf09e4f055db37a0ad97
 include "lib/general.php";
@@ -21,6 +20,7 @@ if ( isset($_GET["read_log"]) || isset($_GET["log_id"]) ) {
 	if (!str_starts_with($url, "https://webstatic-sea.mihoyo.com/") && !str_starts_with($url, "https://genshin.mihoyo.com/")) {
 		die("Invalid url");
 	}
+	if (!str_contains($url, "authkey=")) die("No authkey");
 
 	proceed($url);
 

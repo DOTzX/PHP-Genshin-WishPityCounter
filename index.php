@@ -4,6 +4,8 @@
 // Source: https://github.com/DOTzX/PHP-Genshin-WishPityCounter
 // =======================================================================
 
+define("INDEX_NAME", basename(__FILE__)); // DON'T CHANGE THIS !
+
 include "lib/class.DOTzX.HTMLTableGen.php"; // Find new update here: https://gist.github.com/DOTzX/3ecab71817e8461b308a1addf06eec03
 include "lib/class.DOTzX.SimpleFileOpener.php"; // Find new update here: https://gist.github.com/DOTzX/26afe5ab070acf09e4f055db37a0ad97
 include "lib/general.php";

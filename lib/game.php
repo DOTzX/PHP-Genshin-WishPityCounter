@@ -159,11 +159,11 @@ function readLog($selected_uid=null) {
 		if ($key !== false) unset($list_uid[$key]);
 	
 		if (count($list_uid) == 1) {
-			header("Location: index.php?log_id=" . $list_uid[0]);
+			header("Location: ". INDEX_NAME ."?log_id=" . $list_uid[0]);
 		} else {
 			echo "Pilih UID:";
 			foreach ($list_uid as $value) {
-				echo "\n<br>[] <a href='index.php?log_id=" . $value . "'>" . $value . "</a>";
+				echo "\n<br>[] <a href='". INDEX_NAME ."?log_id=" . $value . "'>" . $value . "</a>";
 			}
 		}
 		die();

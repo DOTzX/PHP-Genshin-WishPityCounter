@@ -4,8 +4,7 @@
 // Source: https://github.com/DOTzX/PHP-Genshin-WishPityCounter
 // =======================================================================
 
-$timezone = "Asia/Jakarta";
-date_default_timezone_set($timezone);
+date_default_timezone_set(TIMEZONE_NAME);
 
 $link_wishlist = "https://hk4e-api-os.mihoyo.com/event/gacha_info/api/getConfigList";
 $link_gachalog = "https://hk4e-api-os.mihoyo.com/event/gacha_info/api/getGachaLog";
@@ -146,8 +145,6 @@ function proceed($url) {
 }
 
 function readLog($selected_uid=null) {
-	global $timezone;
-	
 	$sfo = new SimpleFileOpener("../data/GI_WishData.json");
 	$GI_WishData = json_decode($sfo->read(), true);
 	$GI_WishData = $GI_WishData ? $GI_WishData : [];
@@ -172,7 +169,7 @@ function readLog($selected_uid=null) {
 	if (!array_key_exists($selected_uid, $GI_WishData) || !is_numeric($selected_uid)) die("Tidak ada data tersimpan pada UID <b>$selected_uid</b>");
 
 	$utctime = date("Y-m-d H:i:s", $GI_WishData[$selected_uid]["LAST_UPDATE"]);
-	echo "Last Update: <b>" . $utctime . " (Timezone: $timezone)</b><br><br>\n\n";
+	echo "<a href='". INDEX_NAME ."'>< Back</a> | Last Update: <b>" . $utctime . " (Timezone: ". TIMEZONE_NAME .")</b><br><br>\n\n";
 
 	foreach ($GI_WishData[$selected_uid] as $banner_key => $wishlist) {
 		if (in_array($banner_key, ["LAST_UPDATE"])) continue;

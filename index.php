@@ -13,8 +13,15 @@ include "lib/game.php";
 
 // =======================================================================
 
+if (!file_exists("data/GI_WishData.json") && file_exists("GI_WishData.json")) {
+	if (!file_exists("data/")) mkdir("data/");
+	rename("GI_WishData.json", "data/GI_WishData.json");
+}
+
+// =======================================================================
+
 if ( isset($_GET["read_log"]) || isset($_GET["log_id"]) ) {
-	if (!file_exists("GI_WishData.json")) die("Tidak ada data tersimpan");
+	if (!file_exists("data/GI_WishData.json")) die("Tidak ada data tersimpan");
 	readLog(isset($_GET["log_id"]) ? $_GET["log_id"] : null);
 } else if (isset($_GET["url"])) {
 	$url = base64_decode($_GET["url"]);
@@ -26,7 +33,7 @@ if ( isset($_GET["read_log"]) || isset($_GET["log_id"]) ) {
 
 	proceed($url);
 
-	if (file_exists("GI_WishData.json")) {
+	if (file_exists("data/GI_WishData.json")) {
 ?>
 
 <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
@@ -53,7 +60,7 @@ function readLog() {
 } else {
 // ==============================================================================
 
-if (file_exists("GI_WishData.json")) {
+if (file_exists("data/GI_WishData.json")) {
 ?>
 
 <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->

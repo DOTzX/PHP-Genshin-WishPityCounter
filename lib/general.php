@@ -13,12 +13,13 @@ if (!function_exists('str_contains')) { // PHP <8
 }
 
 
-function http_request($url) {
+function http_request($url, $timeout=null) {
 	$ch = curl_init();
 	$agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36";
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_USERAGENT, $agent);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	if (is_numeric($timeout)) curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 	$output = curl_exec($ch);
 	curl_close($ch);
 	return $output;

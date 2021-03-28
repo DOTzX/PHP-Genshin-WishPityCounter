@@ -61,7 +61,9 @@ function readLog() {
 } else {
 // ==============================================================================
 
-if (file_exists("data/GI_WishData.json")) {
+	disable_ob();
+
+	if (file_exists("data/GI_WishData.json")) {
 ?>
 
 <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
@@ -71,7 +73,7 @@ if (file_exists("data/GI_WishData.json")) {
 <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
 <?php
-}
+	}
 ?>
 
 <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
@@ -82,10 +84,14 @@ if (file_exists("data/GI_WishData.json")) {
 <div>5. Drag-n-drop file <b>output_log.txt</b> pada folder tersebut ke halaman ini</div>
 
 <script type="text/javascript">
+var isAllow = true;
+
 function handleFileSelect(evt) {
 	evt.stopPropagation();
 	evt.preventDefault();
 
+	if (!isAllow) return alert("Harap gunakan update-an terbaru !");
+	
 	var files = evt.dataTransfer.files;
 	var reader = new FileReader();  
 	reader.onload = function(event) {
@@ -119,4 +125,35 @@ document.body.addEventListener('drop', handleFileSelect, false);
 <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
 
 <?php
+	$fcontent = "";
+	if (file_exists("REPOSITORY_LAST_UPDATE")) {
+		$sfo = new SimpleFileOpener("REPOSITORY_LAST_UPDATE", ["r", "w"], false);
+		$fcontent = $sfo->read();
+	}
+	$rlu_check = http_request("https://raw.githubusercontent.com/DOTzX/PHP-Genshin-WishPityCounter/master/REPOSITORY_LAST_UPDATE", 5);
+	if ($rlu_check) {
+		$new_update = false;
+		if ($rlu_check != "404: Not Found") {
+			$new_update = "https://github.com/DOTzX/PHP-Genshin-WishPityCounter";
+		} else if ($fcontent != $rlu_check) {
+			$_exp = explode("|", $rlu_check, 2);
+			if (count($_exp) == 2) {
+				$new_update = $_exp[1];
+			} else {
+				$new_update = "https://github.com/DOTzX/PHP-Genshin-WishPityCounter";
+			}
+		}
+		if ($new_update) {
+?>
+
+<!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
+<h1>New Update <a href='<?=$new_update?>'>here</a></h1>
+<script type="text/javascript">
+var isAllow = false;
+</script>
+<!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
+
+<?php
+		}
+	}
 }

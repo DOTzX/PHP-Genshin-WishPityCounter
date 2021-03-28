@@ -133,7 +133,7 @@ document.body.addEventListener('drop', handleFileSelect, false);
 	$rlu_check = http_request("https://raw.githubusercontent.com/DOTzX/PHP-Genshin-WishPityCounter/master/REPOSITORY_LAST_UPDATE", 5);
 	if ($rlu_check) {
 		$new_update = false;
-		if ($rlu_check != "404: Not Found") {
+		if ($rlu_check == "404: Not Found") {
 			$new_update = "https://github.com/DOTzX/PHP-Genshin-WishPityCounter";
 		} else if ($fcontent != $rlu_check) {
 			$_exp = explode("|", $rlu_check, 2);

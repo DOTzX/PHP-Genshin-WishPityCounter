@@ -154,6 +154,7 @@ function readLog($selected_uid=null) {
 		sort($list_uid);
 		$key = array_search("BANNER_DATA", $list_uid);
 		if ($key !== false) unset($list_uid[$key]);
+		$list_uid = array_values($list_uid);
 	
 		if (count($list_uid) == 1) {
 			header("Location: ". INDEX_NAME ."?log_id=" . $list_uid[0]);

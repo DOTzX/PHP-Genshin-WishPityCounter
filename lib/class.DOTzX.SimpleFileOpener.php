@@ -4,13 +4,11 @@
 // Source: https://gist.github.com/DOTzX/26afe5ab070acf09e4f055db37a0ad97
 // =======================================================================
 
+if (!defined("WORKING_DIR")) define("WORKING_DIR", __DIR__);
+
 class SimpleFileOpener {
-	function __construct($file_name, $edit_mode=["r", "w"], $use_dir_var = true) {
-		if ($use_dir_var) {
-			$this->filename = __DIR__ . "/" . $file_name;
-		} else {
-			$this->filename = $file_name;
-		}
+	function __construct($file_name, $edit_mode=["r", "w"]) {
+		$this->filename = WORKING_DIR . "/" . $file_name;
 		$this->edit_mode = $edit_mode;
 		if (!file_exists(dirname($this->filename))) {
 			mkdir(dirname($this->filename), 0777, true);

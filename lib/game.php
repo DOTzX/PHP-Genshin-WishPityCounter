@@ -40,7 +40,7 @@ function proceed($url) {
 		"authkey" => arr_get($query_arr, "authkey", ""),
 	]);
 
-	$sfo = new SimpleFileOpener("../data/GI_WishData.json");
+	$sfo = new SimpleFileOpener("data/GI_WishData.json");
 	$GI_WishData = json_decode($sfo->read(), true);
 	$GI_WishData = $GI_WishData ? $GI_WishData : [];
 
@@ -145,7 +145,7 @@ function proceed($url) {
 }
 
 function readLog($selected_uid=null) {
-	$sfo = new SimpleFileOpener("../data/GI_WishData.json");
+	$sfo = new SimpleFileOpener("data/GI_WishData.json");
 	$GI_WishData = json_decode($sfo->read(), true);
 	$GI_WishData = $GI_WishData ? $GI_WishData : [];
 

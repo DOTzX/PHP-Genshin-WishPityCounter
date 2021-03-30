@@ -5,6 +5,8 @@
 // =======================================================================
 
 define("INDEX_NAME", basename(__FILE__)); // DON'T CHANGE THIS LINE !
+define("WORKING_DIR", __DIR__); // DON'T CHANGE THIS LINE !
+
 define("TIMEZONE_NAME", "Asia/Jakarta");
 
 include "lib/class.DOTzX.HTMLTableGen.php"; // Find new update here: https://gist.github.com/DOTzX/3ecab71817e8461b308a1addf06eec03
@@ -14,15 +16,15 @@ include "lib/game.php";
 
 // =======================================================================
 
-if (!file_exists("data/GI_WishData.json") && file_exists("GI_WishData.json")) {
-	if (!file_exists("data/")) mkdir("data/");
+if (!file_exists(WORKING_DIR . "/data/GI_WishData.json") && file_exists(WORKING_DIR . "/GI_WishData.json")) {
+	if (!file_exists(WORKING_DIR . "/data")) mkdir("data/");
 	rename("GI_WishData.json", "data/GI_WishData.json");
 }
 
 // =======================================================================
 
 if ( isset($_GET["read_log"]) || isset($_GET["log_id"]) ) {
-	if (!file_exists("data/GI_WishData.json")) die("Tidak ada data tersimpan");
+	if (!file_exists(WORKING_DIR . "/data/GI_WishData.json")) die("Tidak ada data tersimpan");
 	readLog(isset($_GET["log_id"]) ? $_GET["log_id"] : null);
 } else if (isset($_GET["url"])) {
 	$url = base64_decode($_GET["url"]);
@@ -34,7 +36,7 @@ if ( isset($_GET["read_log"]) || isset($_GET["log_id"]) ) {
 
 	proceed($url);
 
-	if (file_exists("data/GI_WishData.json")) {
+	if (file_exists(WORKING_DIR . "/data/GI_WishData.json")) {
 ?>
 
 <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
@@ -63,7 +65,7 @@ function readLog() {
 
 	disable_ob();
 
-	if (file_exists("data/GI_WishData.json")) {
+	if (file_exists(WORKING_DIR . "/data/GI_WishData.json")) {
 ?>
 
 <!-- oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo -->
@@ -126,8 +128,8 @@ document.body.addEventListener('drop', handleFileSelect, false);
 
 <?php
 	$fcontent = "";
-	if (file_exists("REPOSITORY_LAST_UPDATE")) {
-		$sfo = new SimpleFileOpener("REPOSITORY_LAST_UPDATE", ["r", "w"], false);
+	if (file_exists(WORKING_DIR . "/REPOSITORY_LAST_UPDATE")) {
+		$sfo = new SimpleFileOpener("REPOSITORY_LAST_UPDATE");
 		$fcontent = $sfo->read();
 	}
 	$rlu_check = http_request("https://raw.githubusercontent.com/DOTzX/PHP-Genshin-WishPityCounter/master/REPOSITORY_LAST_UPDATE", 5);

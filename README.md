@@ -11,5 +11,5 @@ PHP-Genshin-WishPityCounter
 2. Klik **History**
 3. Buka **Command Prompt (CMD)** pada windows anda
 4. Copy paste ke CMD: **explorer "AppData\LocalLow\miHoYo\Genshin Impact"**
-5. Drag-n-drop file **output_log.txt** pada folder tersebut ke halaman ini
+5. Drag-n-drop file **output_log.txt** pada folder tersebut ke halaman tersebut
 ```

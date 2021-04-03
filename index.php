@@ -132,7 +132,7 @@ document.body.addEventListener('drop', handleFileSelect, false);
 		$sfo = new SimpleFileOpener("REPOSITORY_LAST_UPDATE");
 		$fcontent = $sfo->read();
 	}
-	$rlu_check = http_request("https://raw.githubusercontent.com/DOTzX/PHP-Genshin-WishPityCounter/master/REPOSITORY_LAST_UPDATE", 5);
+	$rlu_check = http_request("https://raw.githubusercontent.com/DOTzX/PHP-Genshin-WishPityCounter/master/REPOSITORY_LAST_UPDATE?t=" . time(), 5);
 	if ($rlu_check) {
 		$new_update = false;
 		if ($rlu_check == "404: Not Found") {

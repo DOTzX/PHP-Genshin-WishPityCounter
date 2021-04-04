@@ -92,10 +92,12 @@ function proceed($url) {
 	
 					if ( in_array($single_wd, $player_data[$_uid][$_gacha_type]) || 
 						(
-							isset($GI_WishData[$_uid][$_gacha_type]) && 
+							isset($GI_WishData[$_uid][$_gacha_type]) &&
 							(
-								$single_wd["id"] == $GI_WishData[$_uid][$_gacha_type][0]["id"] ||
-								in_array($single_wd, $GI_WishData[$_uid][$_gacha_type])
+								in_array($single_wd, $GI_WishData[$_uid][$_gacha_type]) ||
+								(
+									count($GI_WishData[$_uid][$_gacha_type]) >= 1 && $single_wd["id"] == $GI_WishData[$_uid][$_gacha_type][0]["id"]
+								)
 							)
 						) ) {
 						echo "\n<br>[] Fetched_Data: (". $banner_data["key"] . "," . $last_id . ") | " . $isPage;

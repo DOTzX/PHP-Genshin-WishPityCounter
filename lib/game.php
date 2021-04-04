@@ -53,17 +53,6 @@ function proceed($url) {
 	$wish_list = json_decode(http_request(getWishList()), true);
 	echo "\n<br>[] ". json_encode($wish_list);
 
-	$uid = null;
-	foreach ($wish_list["data"]["gacha_type_list"] as $banner_data) {
-		echo "\n<br>[] Getting UID... Banner_Key: " . $banner_data["key"];
-		$last_wish_history = json_decode(http_request(getWishHistory($banner_data["key"], null, 1)), true);
-		if (isset($last_wish_history["data"]["list"]) && count($last_wish_history["data"]["list"]) > 0) {
-			$uid = $last_wish_history["data"]["list"][0]["uid"];
-			break;
-		}
-	}
-	echo "\n<br>[] UID: $uid";
-
 	foreach ($wish_list["data"]["gacha_type_list"] as $banner_data) {
 		if ($banner_data["key"] == "100") continue;
 		
@@ -72,11 +61,6 @@ function proceed($url) {
 
 		$isPage = 1;
 		$last_id = null;
-		if ($uid && isset($GI_WishData[$uid][$banner_data["key"]])) {
-			$last_id = $GI_WishData[$uid][$banner_data["key"]][0]["id"];
-		}
-		echo "\n<br><br>[] Banner_Key: ". $banner_data["key"] ." , Last ID: $last_id";
-
 		$isNextPage = true;
 		while ($isNextPage) {
 			echo "\n<br>[] Accessing: (". $banner_data["key"] . "," . $last_id . ") | " . $isPage;
@@ -109,7 +93,10 @@ function proceed($url) {
 					if ( in_array($single_wd, $player_data[$_uid][$_gacha_type]) || 
 						(
 							isset($GI_WishData[$_uid][$_gacha_type]) && 
-							in_array($single_wd, $GI_WishData[$_uid][$_gacha_type])
+							(
+								$single_wd["id"] == $GI_WishData[$_uid][$_gacha_type][0]["id"] ||
+								in_array($single_wd, $GI_WishData[$_uid][$_gacha_type])
+							)
 						) ) {
 						echo "\n<br>[] Fetched_Data: (". $banner_data["key"] . "," . $last_id . ") | " . $isPage;
 						$isChange = true;
